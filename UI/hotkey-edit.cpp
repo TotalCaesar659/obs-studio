@@ -22,6 +22,7 @@
 #include <QStyle>
 
 #include "obs-app.hpp"
+#include "mute-checkbox.hpp"
 #include "qt-wrappers.hpp"
 
 static inline bool operator!=(const obs_key_combination_t &c1,
@@ -288,12 +289,19 @@ void OBSHotkeyWidget::AddEdit(obs_key_combination combo, int idx)
 
 	auto add = new QPushButton;
 	add->setText("+");
-	add->setMinimumWidth(50);
+	add->setFixedSize(22,22);
 
 	auto remove = new QPushButton;
 	remove->setText("-");
 	remove->setEnabled(removeButtons.size() > 0);
-	remove->setMinimumWidth(50);
+	remove->setFixedSize(22,22);
+
+	auto mute = new MuteCheckBox();
+
+	auto path = new QLineEdit;
+
+	auto browse = new QPushButton;
+	browse->setText(QTStr("Browse"));
 
 	auto CurrentIndex = [&, remove]
 	{
@@ -321,6 +329,9 @@ void OBSHotkeyWidget::AddEdit(obs_key_combination combo, int idx)
 	subLayout->addWidget(clear);
 	subLayout->addWidget(add);
 	subLayout->addWidget(remove);
+	subLayout->addWidget(mute);
+	subLayout->addWidget(path);
+	subLayout->addWidget(browse);
 
 	if (removeButtons.size() == 1)
 		removeButtons.front()->setEnabled(true);
